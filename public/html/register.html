@@ -1,0 +1,17 @@
+<form ng-submit="createUser()">
+    <div class="form-group">
+        <label>Name</label>
+        <input ng-model="newUser.first" class="form-control" placeholder="first">
+        <input ng-model="newUser.last" class="form-control" placeholder="last">
+    </div>
+    <div class="form-group">
+        <label>Email address</label>
+        <input ng-model="newUser.email" type="email" class="form-control" placeholder="Email">
+    </div>
+    <div class="form-group">
+        <label>Password</label>
+        <input ng-model="newUser.password" type="password" class="form-control" placeholder="Password">
+        <input ng-model="newUser.passwordCheck" type="password" class="form-control" placeholder="re-enter Password">
+    </div>
+    <button type="submit" class="btn btn-default">Submit</button>
+</form>
