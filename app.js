@@ -30,34 +30,17 @@ app.use(express.static(__dirname + '/public'));
 // Routes \\
 var authenticationCntrl = require('./controllers/authentication');
 
-// Our get request for viewing the login page
-// app.get('/auth/login', authenticationCntrl.login);
-
-// Post received from submitting the login form
-app.post('/auth/login', authenticationCntrl.processLogin);
-
-// Post received from submitting the signup form
-app.post('/auth/register', authenticationCntrl.processRegister);
-
-// Any requests to log out can be handled at this url
-app.get('/auth/logout', authenticationCntrl.logout);
-
-app.get('/loggedIn', authenticationCntrl.loggedIn)
-
-// This route is designed to send back the logged in user (or undefined if they are NOT logged in)
-app.get('/api/profile', authenticationCntrl.authorized, function(req, res){
-	res.send(req.user)
-})
-
 app.get('/', function(req, res){
   res.sendFile('/html/index.html', {root : './public'})
 });
 
-// ***** IMPORTANT ***** //
-// By including this middleware (defined in our config/passport.js module.exports),
-// We can prevent unauthorized access to any route handler defined after this call
-// to .use()
-app.use(passportConfig.ensureAuthenticated);
+app.post('/auth/login', authenticationCntrl.processLogin);
+
+app.post('/auth/register', authenticationCntrl.processRegister);
+
+app.post('/auth/logout', authenticationCntrl.logout);
+
+app.get('/api/profile', authenticationCntrl.authorized, authenticationCntrl.profile);
 
 // Creating Server and Listening for Connections \\
 var port = 3000

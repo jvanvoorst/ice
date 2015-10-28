@@ -31,15 +31,13 @@ passport.deserializeUser(function(id, done){
   });
 });
 
-
 // Here we define the strategy for our local authentication.
 // This will be utilized by passport whenever we reference it.
 var localStrategy = new LocalStrategy(function(username, password, done){
-
     // Given a username and password, let's try to authenticate this user.
     // We start by seeing if the username exists in our DB
     User.findOne({username: username}, function(err, user){
-
+        // console.log('p41' + user)
         // If there was an error, allow execution to move to the next middleware
         if(err) return done(err);
 
@@ -76,15 +74,15 @@ passport.use(localStrategy);
 // including it is enough. However, this helpful middleware allows us
 // to block access to routes if the user isn't authenticated by redirecting
 // them to the login page. We'll see this used in app.js
-module.exports = {
-    ensureAuthenticated: function(req, res, next){
-        // If the current user is logged in...
-        if(req.isAuthenticated()){
-            // Middleware allows the execution chain to continue.
-            return next();
-        }
-    // If not, redirect to login
-    res.redirect('/auth/login');    
-  }
-};
+// module.exports = {
+//     ensureAuthenticated: function(req, res, next){
+//         // If the current user is logged in...
+//         if(req.isAuthenticated()){
+//             // Middleware allows the execution chain to continue.
+//             return next();
+//         }
+//     // If not, redirect to login
+//     res.redirect('/auth/login');    
+//   }
+// };
 

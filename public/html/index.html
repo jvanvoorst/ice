@@ -10,13 +10,13 @@
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular-route.js"></script>
 
 </head>
-<body>
+<body ng-controller="mainController">
 
 	<div class="container">
 		<div class="jumbotron">
 	  		<h1>Ice</h1>
 	  		<p>...</p>
-	  		<p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>
+	  		<button ng-click="logout()" class="btn btn-primary btn-lg">Log Out</button>
 		</div>
 
 		<div ng-view></div>

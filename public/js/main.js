@@ -1,6 +1,6 @@
 var app = angular.module('iceApp', ['ngRoute']);
 
-app.config(['$routeProvider', '$q', '$timeout', '$http', '$location', '$rootScope', function($routeProvider, $q, $timeout, $location, $rootScope) {
+app.config(['$routeProvider', function($routeProvider) {
 
 	$routeProvider.when('/', {
 		templateUrl : '/html/welcome.html',
@@ -17,25 +17,7 @@ app.config(['$routeProvider', '$q', '$timeout', '$http', '$location', '$rootScop
 	.when('/profile.html', {
 		templateUrl : '/html/profile.html',
 		controller 	: 'profileController',
-		resolve     : { loggedIn : checkLoggedin }
 	})
-
-	var checkLoggedin = function($q, $timeout, $http, $location, $rootScope) {
-		console.log('check login')
-	 	// Initialize a new promise 
-	 	var deferred = $q.defer(); 
-	 	// Make an AJAX call to check if the user is logged in 
-	 	$http.get('/loggedIn').success(function(user) { 
-	 		// Authenticated 
-	 		if (user !== '0') deferred.resolve(); 
-	 			// Not Authenticated 
-	 		else { 
-	 			$rootScope.message = 'You need to log in.'; 
-	 			deferred.reject(); $location.url('/login'); 
-	 		} 
-	 	}); 
-	 	return deferred.promise; 
-	}; 
 
 }]);
 
@@ -43,12 +25,13 @@ app.controller('mainController', ['$scope', '$http', '$location', function($scop
 
 	$scope.createUser = function() {
 		if ($scope.newUser.password !== $scope.newUser.passwordCheck) {
-			alert('not the same');
+			alert('Passwords do not match, please try again');
 			$scope.newUser.password = '';
 			$scope.newUser.passwordCheck = '';
 		}
 		else {
 			$http.post('/auth/register', $scope.newUser).then(function(response) {
+				console.log(response.data)
 				if (response.data.authorized) {
 					$location.url('/profile.html');
 				}
@@ -56,15 +39,39 @@ app.controller('mainController', ['$scope', '$http', '$location', function($scop
 		}
 	};
 
+	$scope.loginUser = function() {
+		$http.post('auth/login', $scope.login).then(function(response) {
+			if (response.data.error) {
+				alert(response.data.error)
+			}
+			else if (response.data.authorized) {
+				$location.url('/profile.html');
+			}
+		});
+	};
+
+	$scope.logout = function() {
+		console.log('logging out')
+		$http.post('auth/logout', $scope.user).then(function(response) {
+			console.log(response.data);
+			$location.url('/');
+		});
+	};
+
 }]);
 
-app.controller('profileController', ['$scope', '$http', '$location', '$q', '$timeout', '$rootScope', function($scope, $http, $location, $q, $timeout, $rootScope) {
+app.controller('profileController', ['$scope', '$http', '$location', function($scope, $http, $location) {
 
 	$http.get('/api/profile').then(function(response) {
-		$scope.user = response.data;
+		console.log(response.data);
+		if (response.data._id) {
+			$scope.user = response.data;
+		}
+		else if (!response.data.authorized) {
+			console.log('not auth')
+			$location.url('/')
+		}
 	})
-
-	
 
 }]);
 
