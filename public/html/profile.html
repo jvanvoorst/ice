@@ -1,2 +1,55 @@
 <h3>Profile</h3>
 <h4>{{user.first}}</h4>
+<h4>{{user.last}}</h4>
+<h4>{{user.phone}}</h4>
+<h4>{{user.username}}</h4>
+
+<a class="btn" href="#/editprofile.html">Edit Profile</a>
+
+<h3>People to Alert</h3>
+<button ng-click="addPeople()">Add People</button>
+
+<div ng-show="peopleForm">
+	<form ng-submit="createReceiver()">
+	    <div class="form-group">
+	        <label>Name</label>
+	        <input ng-model="receiver.name" class="form-control" placeholder="name" required>
+	    </div>
+	    <div class="form-group">
+	        <label>Email address</label>
+	        <input ng-model="receiver.email" type="email" class="form-control" placeholder="name@email.com" required>
+	    </div>
+	    <div class="form-group">
+	        <label>Phone Number (this number will be used by the system to send alerts to)</label>
+	        <input ng-model="receiver.phone" type="tel" pattern="^\d{3}-\d{3}-\d{4}$" class="form-control" placeholder="xxx-xxx-xxxx" required>
+	    </div>
+	    <button type="submit" class="btn btn-default">Submit</button>
+	    <button ng-click="addPeople()" class="btn btn-default btn-danger">Cancel</button>
+	</form>
+</div>
+
+<div ng-repeat="receiver in user.receivers"class="receivers">
+	<h5>{{receiver.name}}</h5>
+	<h5>{{receiver.email}}</h5>
+	<h5>{{receiver.phone}}</h5>
+	<button ng-click="removeReceiver($index)" class="btn btn-xs">Remove</button>
+	<button ng-click="toggleReceiverForm()" class="btn btn-xs">edit</button>
+	<div ng-show="receiverForm">
+		<form ng-submit="editReceiver(receiver, $index)">
+		    <div class="form-group">
+		        <label>Name</label>
+		        <input ng-model="receiver.name" class="form-control" placeholder="name" required>
+		    </div>
+		    <div class="form-group">
+		        <label>Email address</label>
+		        <input ng-model="receiver.email" type="email" class="form-control" placeholder="name@email.com" required>
+		    </div>
+		    <div class="form-group">
+		        <label>Phone Number (this number will be used by the system to send alerts to)</label>
+		        <input ng-model="receiver.phone" type="tel" pattern="^\d{3}-\d{3}-\d{4}$" class="form-control" placeholder="xxx-xxx-xxxx" required>
+		    </div>
+		    <button type="submit" class="btn btn-default">Submit</button>
+		    <button ng-click="toggleReceiverForm()" class="btn btn-default btn-danger">Cancel</button>
+		</form>
+	</div>
+</div>

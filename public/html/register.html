@@ -1,12 +1,16 @@
 <form ng-submit="createUser()">
     <div class="form-group">
         <label>Name</label>
-        <input ng-model="newUser.first" class="form-control" placeholder="first">
+        <input ng-model="newUser.first" class="form-control" placeholder="first" required>
         <input ng-model="newUser.last" class="form-control" placeholder="last">
     </div>
     <div class="form-group">
         <label>Email address</label>
-        <input ng-model="newUser.username" type="email" class="form-control" placeholder="Email">
+        <input ng-model="newUser.username" type="email" class="form-control" placeholder="name@email.com" required>
+    </div>
+    <div class="form-group">
+        <label>Phone Number (this number will be used by the system to send alerts to)</label>
+        <input ng-model="newUser.phone" type="tel" pattern="^\d{3}-\d{3}-\d{4}$" class="form-control" placeholder="xxx-xxx-xxxx" required>
     </div>
     <div class="form-group">
         <label>Password</label>

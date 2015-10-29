@@ -68,21 +68,3 @@ var localStrategy = new LocalStrategy(function(username, password, done){
 // Passport needs to know about our strategy definition above, so
 // we hook that in here.
 passport.use(localStrategy);
-
-
-// We don't really need to export anything from this file, since just
-// including it is enough. However, this helpful middleware allows us
-// to block access to routes if the user isn't authenticated by redirecting
-// them to the login page. We'll see this used in app.js
-// module.exports = {
-//     ensureAuthenticated: function(req, res, next){
-//         // If the current user is logged in...
-//         if(req.isAuthenticated()){
-//             // Middleware allows the execution chain to continue.
-//             return next();
-//         }
-//     // If not, redirect to login
-//     res.redirect('/auth/login');    
-//   }
-// };
-

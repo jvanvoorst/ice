@@ -13,12 +13,20 @@ var userSchema = mongoose.Schema({
     username : {
         type     : String,
         required : true,
-        // unique   : true
+        unique   : true
+    },
+    phone : {
+        type     : String,
+        required : true,
+        unique   : true
     },
     password : {
         type     : String,
         required : true
     },
+    receivers : {
+        type : [],
+    }
 });
 
 userSchema.pre('save', function(next){

@@ -42,6 +42,14 @@ app.post('/auth/logout', authenticationCntrl.logout);
 
 app.get('/api/profile', authenticationCntrl.authorized, authenticationCntrl.profile);
 
+app.post('/api/saveEdit', authenticationCntrl.saveEdit);
+
+app.post('/api/addReceiver', authenticationCntrl.addReceiver);
+
+app.post('/api/removeReceiver', authenticationCntrl.removeReceiver);
+
+app.post('/api/editReceiver', authenticationCntrl.editReceiver);
+
 // Creating Server and Listening for Connections \\
 var port = 3000
 app.listen(port, function(){

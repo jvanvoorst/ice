@@ -23,13 +23,11 @@ var authenticationController = {
     },
 
     processLogin : function(req, res, next){
-        console.log(req.body);
         // Passport's "authenticate" method returns a method, so we store it
         // in a variable and call it with the proper arguments afterwards.
         // We are using the "local" strategy defined (and used) in the
         // config/passport.js file
         var authFunction = passport.authenticate('local', function(err, user, info){
-            console.log('34', user, err, info);
             // If there was an error, allow execution to move to the next middleware
             if(err) return next(err);
             // If the user was not successfully logged in due to not being in the
@@ -37,7 +35,6 @@ var authenticationController = {
             // which will be read and used in the "login" handler above and then redirect
             // to that handler.
             if(!user) {
-                console.log('42' + user)
 		        return res.send({error: 'Error logging in. Please try again.'});
             }
             // If we make it this far, the user has correctly authenticated with passport
@@ -53,7 +50,8 @@ var authenticationController = {
         var user = new User({
             first    : req.body.first,
             last     : req.body.last,
-            username    : req.body.username,
+            username : req.body.username,
+            phone    : req.body.phone,
             password : req.body.password,
         });
 
@@ -82,11 +80,49 @@ var authenticationController = {
         res.send(req.user);
     },
 
-    // Handle logout requests
+    saveEdit : function(req, res) {
+        User.findOne({ _id : req.body._id }, function(err, user) {
+            user.first = req.body.first;
+            user.last = req.body.last;
+            user.username = req.body.username;
+            user.phone = req.body.phone;
+            user.save();
+        });
+        res.send(req.user);
+    },
+
+    addReceiver : function(req, res) {
+        User.findOne({ _id : req.user._id }, function(err, user) {
+            user.receivers.push(req.body);
+            user.save();
+        });
+        res.send(req.user);
+    },
+
+    removeReceiver : function(req, res) {
+        User.findOne({ _id : req.user._id }, function(err, user) {
+            user.receivers.splice(req.body.remove, 1);
+            user.save();
+        });
+        res.send(req.user);
+    },
+
+    editReceiver : function(req, res) {
+        User.findOne({ _id : req.user._id }, function(err, user) {
+            console.log(req.body);
+            user.receivers[req.body.index].name = req.body.name;
+            user.receivers[req.body.index].email = req.body.email;
+            user.receivers[req.body.index].phone = req.body.phone;
+            user.save();
+            console.log(user.receivers[req.body.index]);
+        });
+        res.send(req.body);
+    },
+
     logout : function(req, res){
         req.logout();
         res.send('logged out');
-    }
+    },
 };
 
 module.exports = authenticationController;
