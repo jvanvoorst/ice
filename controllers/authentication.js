@@ -76,49 +76,6 @@ var authenticationController = {
         });
     },
 
-    profile : function(req, res) {
-        res.send(req.user);
-    },
-
-    saveEdit : function(req, res) {
-        User.findOne({ _id : req.body._id }, function(err, user) {
-            user.first = req.body.first;
-            user.last = req.body.last;
-            user.username = req.body.username;
-            user.phone = req.body.phone;
-            user.save();
-        });
-        res.send(req.user);
-    },
-
-    addReceiver : function(req, res) {
-        User.findOne({ _id : req.user._id }, function(err, user) {
-            user.receivers.push(req.body);
-            user.save();
-        });
-        res.send(req.user);
-    },
-
-    removeReceiver : function(req, res) {
-        User.findOne({ _id : req.user._id }, function(err, user) {
-            user.receivers.splice(req.body.remove, 1);
-            user.save();
-        });
-        res.send(req.user);
-    },
-
-    editReceiver : function(req, res) {
-        User.findOne({ _id : req.user._id }, function(err, user) {
-            console.log(req.body);
-            user.receivers[req.body.index].name = req.body.name;
-            user.receivers[req.body.index].email = req.body.email;
-            user.receivers[req.body.index].phone = req.body.phone;
-            user.save();
-            console.log(user.receivers[req.body.index]);
-        });
-        res.send(req.body);
-    },
-
     logout : function(req, res){
         req.logout();
         res.send('logged out');
@@ -126,3 +83,4 @@ var authenticationController = {
 };
 
 module.exports = authenticationController;
+

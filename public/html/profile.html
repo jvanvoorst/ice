@@ -6,11 +6,12 @@
 
 <a class="btn" href="#/editprofile.html">Edit Profile</a>
 
+<!-- Receivers ========================================================================================================================== -->
 <h3>People to Alert</h3>
-<button ng-click="addPeople()">Add People</button>
+<button ng-click="toggleAddReceiverForm()">Add People</button>
 
-<div ng-show="peopleForm">
-	<form ng-submit="createReceiver()">
+<div ng-show="addReceiverForm">
+	<form ng-submit="addReceiver()">
 	    <div class="form-group">
 	        <label>Name</label>
 	        <input ng-model="receiver.name" class="form-control" placeholder="name" required>
@@ -24,17 +25,17 @@
 	        <input ng-model="receiver.phone" type="tel" pattern="^\d{3}-\d{3}-\d{4}$" class="form-control" placeholder="xxx-xxx-xxxx" required>
 	    </div>
 	    <button type="submit" class="btn btn-default">Submit</button>
-	    <button ng-click="addPeople()" class="btn btn-default btn-danger">Cancel</button>
+	    <button ng-click="toggleAddReceiverForm()" class="btn btn-default btn-danger">Cancel</button>
 	</form>
 </div>
 
-<div ng-repeat="receiver in user.receivers"class="receivers">
+<div ng-repeat="receiver in receivers"class="receivers">
 	<h5>{{receiver.name}}</h5>
 	<h5>{{receiver.email}}</h5>
 	<h5>{{receiver.phone}}</h5>
 	<button ng-click="removeReceiver($index)" class="btn btn-xs">Remove</button>
-	<button ng-click="toggleReceiverForm()" class="btn btn-xs">edit</button>
-	<div ng-show="receiverForm">
+	<button ng-click="toggleEditReceiverForm()" class="btn btn-xs">edit</button>
+	<div ng-show="editReceiverForm">
 		<form ng-submit="editReceiver(receiver, $index)">
 		    <div class="form-group">
 		        <label>Name</label>
@@ -49,7 +50,58 @@
 		        <input ng-model="receiver.phone" type="tel" pattern="^\d{3}-\d{3}-\d{4}$" class="form-control" placeholder="xxx-xxx-xxxx" required>
 		    </div>
 		    <button type="submit" class="btn btn-default">Submit</button>
-		    <button ng-click="toggleReceiverForm()" class="btn btn-default btn-danger">Cancel</button>
+		    <button ng-click="toggleEditReceiverForm()" class="btn btn-default btn-danger">Cancel</button>
 		</form>
 	</div>
 </div>
+
+<!-- Alerts ========================================================================================================================== -->
+<h3>Alerts</h3>
+<button ng-click="toggleAddAlertForm()">Add Alerts</button>
+
+<div ng-show="addAlertForm">
+	<form ng-submit="addAlert()">
+	    <div class="form-group">
+	        <label>Trail-Head</label>
+	        <input ng-model="alert.trailHead" class="form-control" placeholder="Trail-Head" required>
+	    </div>
+	    <div class="form-group">
+	        <label>Route</label>
+	        <input ng-model="alert.route" class="form-control" placeholder="Route" required>
+	    </div>
+	    <div class="form-group">
+	        <label>Time</label>
+	        <input ng-model="alert.time" type="" class="form-control" placeholder="00:00" required>
+	    </div>
+	    <button type="submit" class="btn btn-default">Submit</button>
+	    <button ng-click="toggleAddAlertForm()" class="btn btn-default btn-danger">Cancel</button>
+	</form>
+</div>
+
+<div ng-repeat="alert in alerts"class="receivers">
+	<h5>{{alert.trailHead}}</h5>
+	<h5>{{alert.route}}</h5>
+	<h5>{{alert.time}}</h5>
+	<button ng-click="removeAlert($index)" class="btn btn-xs">Remove</button>
+	<button ng-click="toggleEditAlertForm()" class="btn btn-xs">edit</button>
+	<div ng-show="editAlertForm">
+		<form ng-submit="editAlert(alert, $index)">
+		    <div class="form-group">
+		        <label>Trail Head</label>
+		        <input ng-model="alert.trailHead" class="form-control" placeholder="Trail Head" required>
+		    </div>
+		    <div class="form-group">
+		        <label>Route</label>
+		        <input ng-model="alert.route" class="form-control" placeholder="your route" required>
+		    </div>
+		    <div class="form-group">
+		        <label>Alert Time</label>
+		        <input ng-model="alert.time" type="" class="form-control" placeholder="00:00" required>
+		    </div>
+		    <button type="submit" class="btn btn-default">Submit</button>
+		    <button ng-click="toggleEditAlertForm()" class="btn btn-default btn-danger">Cancel</button>
+		</form>
+	</div>
+</div>
+
+

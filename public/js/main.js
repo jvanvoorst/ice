@@ -65,51 +65,98 @@ app.controller('mainController', ['$scope', '$http', '$location', function($scop
 }]);
 
 app.controller('profileController', ['$scope', '$http', '$location', function($scope, $http, $location) {
-
+	// get user profile info
 	$http.get('/api/profile').then(function(response) {
 		if (response.data._id) {
 			$scope.user = response.data;
 		}
 		else if (!response.data.authorized) {
-			console.log('not auth')
 			$location.url('/')
 		}
 	});
+	// get receivers for logged in user
+	$http.get('/api/userReceivers').then(function(response) {
+		$scope.receivers = response.data;
+	});
 
-	$scope.peopleForm = false;
+	// get alerts for logged in user
+	$http.get('/api/userAlerts').then(function(response) {
+		$scope.alerts = response.data;
+	});
 
-	$scope.addPeople = function() {
-		$scope.peopleForm = !$scope.peopleForm;
+	// set edit and add receiver forms to hidden and define toggle function to show
+	$scope.editReceiverForm = false;
+	$scope.addReceiverForm = false;
+	$scope.toggleAddReceiverForm = function() {
+		$scope.addReceiverForm = !$scope.addReceiverForm;
+	};
+	$scope.toggleEditReceiverForm = function() {
+		$scope.editReceiverForm = !$scope.editReceiverForm;
 	};
 
-	$scope.createReceiver = function() {
-		$scope.peopleForm = false;
+	// add, remove and edit functions for Receivers
+	$scope.addReceiver = function() {
+		$scope.addReceiverForm = false;
+
+		$scope.receiver.userID = $scope.user._id;
+
 		$http.post('/api/addReceiver', $scope.receiver).then(function(response) {
-			$scope.user = response.data;
+			$scope.receivers = response.data;
 		});
 	};
-
 	$scope.removeReceiver = function(index) {
-		var remove = { remove : index };
+		var remove = { id : $scope.receivers[index]._id };
 		$http.post('/api/removeReceiver', remove).then(function(response) {
-			$scope.user = response.data;
+			$scope.receivers = response.data;
 		});
 	};
-
-	$scope.toggleReceiverForm = function() {
-		$scope.receiverForm = !$scope.receiverForm;
-	}
-
 	$scope.editReceiver = function(receiver, index) {
-		$scope.receiverForm = false;
+		$scope.editReceiverForm = false;
 		var edit = {
-			index : index,
+			id : $scope.receivers[index]._id,
 			name  : receiver.name, 
 			email : receiver.email,
 			phone : receiver.phone,
 		};
 		$http.post('/api/editReceiver', edit).then(function(response) {
-			console.log(response.data);
+			$scope.receivers = response.data;
+		})
+	};
+
+	// set edit and add alerts forms to hidden and define toggle function to show
+	$scope.editAlertForm = false;
+	$scope.addAlertForm = false;
+	$scope.toggleAddAlertForm = function() {
+		$scope.addAlertForm = !$scope.addAlertForm;
+	};
+	$scope.toggleEditAlertForm = function() {
+		$scope.editAlertForm = !$scope.editAlertForm;
+	};
+
+	//add, remove and edit functions for Alerts
+	$scope.addAlert = function() {
+		$scope.addAlertForm = false;
+		$scope.alert.userID = $scope.user._id;
+		$http.post('/api/addAlert', $scope.alert).then(function(response) {
+			$scope.alerts = response.data;
+		});
+	};
+	$scope.removeAlert = function(index) {
+		var remove = { id : $scope.alerts[index]._id };
+		$http.post('/api/removeAlert', remove).then(function(response) {
+			$scope.alerts = response.data;
+		});
+	};
+	$scope.editAlert = function(alert, index) {
+		$scope.editAlertForm = false;
+		var edit = {
+			id : $scope.alerts[index]._id,
+			trailHead  : alert.trailHead, 
+			route : alert.route,
+			time : alert.time,
+		};
+		$http.post('/api/editAlert', edit).then(function(response) {
+			$scope.alerts = response.data;
 		})
 	};
 
@@ -127,7 +174,7 @@ app.controller('editController', ['$scope', '$http', '$location', function($scop
 	});
 
 	$scope.saveProfile = function() {
-		$http.post('/api/saveEdit', $scope.editUser).then(function(response) {
+		$http.post('/api/editProfile', $scope.editUser).then(function(response) {
 			$location.url('/profile.html');
 		});
 	};

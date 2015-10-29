@@ -22,33 +22,44 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Application Configuration \\
+// Application Configuration
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public'));
 
-// Routes \\
+// Controller requires
 var authenticationCntrl = require('./controllers/authentication');
+var profileCntrl = require('./controllers/profileCntrl');
+var receiverCntrl = require('./controllers/receiverCntrl');
+var alertCntrl = require('./controllers/alertCntrl');
 
+// Routes
 app.get('/', function(req, res){
   res.sendFile('/html/index.html', {root : './public'})
 });
 
+// Authentication routes
 app.post('/auth/login', authenticationCntrl.processLogin);
-
 app.post('/auth/register', authenticationCntrl.processRegister);
-
 app.post('/auth/logout', authenticationCntrl.logout);
 
-app.get('/api/profile', authenticationCntrl.authorized, authenticationCntrl.profile);
+// get routes for user profile, receivers, and alerts
+app.get('/api/profile', authenticationCntrl.authorized, profileCntrl.profile);
+app.get('/api/userReceivers', authenticationCntrl.authorized, receiverCntrl.userReceivers);
+app.get('/api/userAlerts', authenticationCntrl.authorized, alertCntrl.userAlerts);
 
-app.post('/api/saveEdit', authenticationCntrl.saveEdit);
+// edit user profile
+app.post('/api/editProfile', profileCntrl.editProfile);
 
-app.post('/api/addReceiver', authenticationCntrl.addReceiver);
+// Receiver routes for add, edit, and remove
+app.post('/api/addReceiver', receiverCntrl.addReceiver);
+app.post('/api/editReceiver', receiverCntrl.editReceiver);
+app.post('/api/removeReceiver', receiverCntrl.removeReceiver);
 
-app.post('/api/removeReceiver', authenticationCntrl.removeReceiver);
-
-app.post('/api/editReceiver', authenticationCntrl.editReceiver);
+// Alert routes for add, edit, and remove
+app.post('/api/addAlert', alertCntrl.addAlert);
+app.post('/api/editAlert', alertCntrl.editAlert);
+app.post('/api/removeAlert', alertCntrl.removeAlert);
 
 // Creating Server and Listening for Connections \\
 var port = 3000
