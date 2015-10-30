@@ -1,3 +1,7 @@
 .receivers {
 	background-color: lightgrey;
 }
+.header {
+	background-color: lightgrey;
+	height: 200px;
+}

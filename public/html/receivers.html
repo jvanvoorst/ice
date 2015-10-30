@@ -1,0 +1,61 @@
+<div class="container">
+	<div class="row">
+		<div class="col-md-4 col-md-offset-7">
+			<a href="#/profile.html"><button class="btn btn-default">Profile</button></a>
+			<button class="btn btn-default btn-primary">People</button>
+			<a href="#/alerts.html"><button class="btn btn-default">Alerts</button></a>
+			<button ng-click="logout()" class="btn btn-default">Log Out</button>
+		</div>
+	</div>
+</div>
+
+<!-- Receivers ========================================================================================================================== -->
+<div class="container">
+	<h3>People to Alert</h3>
+	<button ng-click="toggleAddReceiverForm()">Add People</button>
+	<!-- add receiver -->
+	<div ng-show="addReceiverForm">
+		<form ng-submit="addReceiver()">
+		    <div class="form-group">
+		        <label>Name</label>
+		        <input ng-model="receiver.name" class="form-control" placeholder="name" required>
+		    </div>
+		    <div class="form-group">
+		        <label>Email address</label>
+		        <input ng-model="receiver.email" type="email" class="form-control" placeholder="name@email.com" required>
+		    </div>
+		    <div class="form-group">
+		        <label>Phone Number (this number will be used by the system to send alerts to)</label>
+		        <input ng-model="receiver.phone" type="tel" pattern="^\d{3}-\d{3}-\d{4}$" class="form-control" placeholder="xxx-xxx-xxxx" required>
+		    </div>
+		    <button type="submit" class="btn btn-default">Submit</button>
+		    <button ng-click="toggleAddReceiverForm()" class="btn btn-default btn-danger">Cancel</button>
+		</form>
+	</div>
+	<!-- editreceiver -->
+	<div ng-repeat="receiver in receivers"class="receivers">
+		<h5>{{receiver.name}}</h5>
+		<h5>{{receiver.email}}</h5>
+		<h5>{{receiver.phone}}</h5>
+		<button ng-click="removeReceiver($index)" class="btn btn-xs">Remove</button>
+		<button ng-click="toggleEditReceiverForm()" class="btn btn-xs">edit</button>
+		<div ng-show="editReceiverForm">
+			<form ng-submit="editReceiver(receiver, $index)">
+			    <div class="form-group">
+			        <label>Name</label>
+			        <input ng-model="receiver.name" class="form-control" placeholder="name" required>
+			    </div>
+			    <div class="form-group">
+			        <label>Email address</label>
+			        <input ng-model="receiver.email" type="email" class="form-control" placeholder="name@email.com" required>
+			    </div>
+			    <div class="form-group">
+			        <label>Phone Number (this number will be used by the system to send alerts to)</label>
+			        <input ng-model="receiver.phone" type="tel" pattern="^\d{3}-\d{3}-\d{4}$" class="form-control" placeholder="xxx-xxx-xxxx" required>
+			    </div>
+			    <button type="submit" class="btn btn-default">Submit</button>
+			    <button ng-click="toggleEditReceiverForm()" class="btn btn-default btn-danger">Cancel</button>
+			</form>
+		</div>
+	</div>
+</div>
