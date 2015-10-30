@@ -137,6 +137,7 @@ app.controller('profileController', ['$scope', '$http', '$location', function($s
 	$scope.addAlert = function() {
 		$scope.addAlertForm = false;
 		$scope.alert.userID = $scope.user._id;
+		console.log($scope.alert);
 		$http.post('/api/addAlert', $scope.alert).then(function(response) {
 			$scope.alerts = response.data;
 		});
@@ -159,6 +160,10 @@ app.controller('profileController', ['$scope', '$http', '$location', function($s
 			$scope.alerts = response.data;
 		})
 	};
+
+	$scope.sendMessage - function() {
+		$http.post('/sms/sendMessage');
+	}
 
 }]);
 

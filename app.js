@@ -32,6 +32,7 @@ var authenticationCntrl = require('./controllers/authentication');
 var profileCntrl = require('./controllers/profileCntrl');
 var receiverCntrl = require('./controllers/receiverCntrl');
 var alertCntrl = require('./controllers/alertCntrl');
+var twilio = require('./controllers/twilio');
 
 // Routes
 app.get('/', function(req, res){
@@ -60,6 +61,8 @@ app.post('/api/removeReceiver', receiverCntrl.removeReceiver);
 app.post('/api/addAlert', alertCntrl.addAlert);
 app.post('/api/editAlert', alertCntrl.editAlert);
 app.post('/api/removeAlert', alertCntrl.removeAlert);
+
+app.post('/sms/sendMessage', twilio.send);
 
 // Creating Server and Listening for Connections \\
 var port = 3000
