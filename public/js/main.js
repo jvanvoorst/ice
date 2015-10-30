@@ -20,19 +20,20 @@ app.config(['$routeProvider', function($routeProvider) {
 	})
 	.when('/editprofile.html', {
 		templateUrl : '/html/editprofile.html',
-		controller  : 'editController'
+		controller  : 'profileController'
 	})
 	.when('/receivers.html', {
 		templateUrl : '/html/receivers.html',
-		controller : 'profileController'
+		controller : 'receiversController'
 	})
 	.when('/alerts.html', {
 		templateUrl : '/html/alerts.html',
-		controller : 'profileController'
+		controller : 'alertsController'
 	})
 
 }]);
 
+//=============================Login - Register========================================================
 app.controller('mainController', ['$scope', '$http', '$location', function($scope, $http, $location) {
 
 	$scope.createUser = function() {
@@ -43,7 +44,6 @@ app.controller('mainController', ['$scope', '$http', '$location', function($scop
 		}
 		else {
 			$http.post('/auth/register', $scope.newUser).then(function(response) {
-				console.log(response.data)
 				if (response.data.authorized) {
 					$location.url('/profile.html');
 				}
@@ -63,16 +63,16 @@ app.controller('mainController', ['$scope', '$http', '$location', function($scop
 	};
 
 	$scope.logout = function() {
-		console.log('logging out')
 		$http.post('auth/logout', $scope.user).then(function(response) {
-			console.log(response.data);
 			$location.url('/');
 		});
 	};
 
 }]);
 
+//=============================Profile====================================================================
 app.controller('profileController', ['$scope', '$http', '$location', function($scope, $http, $location) {
+	
 	// get user profile info
 	$http.get('/api/profile').then(function(response) {
 		if (response.data._id) {
@@ -82,14 +82,30 @@ app.controller('profileController', ['$scope', '$http', '$location', function($s
 			$location.url('/')
 		}
 	});
+
+	$http.get('/api/profile').then(function(response) {
+		if (response.data._id) {
+			$scope.editUser = response.data;
+		}
+		else if (!response.data.authorized) {
+			$location.url('/')
+		}
+	});
+
+	$scope.saveProfile = function() {
+		$http.post('/api/editProfile', $scope.editUser).then(function(response) {
+			$location.url('/profile.html');
+		});
+	};
+
+}]);
+
+//=============================Receivers====================================================================
+app.controller('receiversController', ['$scope', '$http', '$location', function($scope, $http, $location) {
+
 	// get receivers for logged in user
 	$http.get('/api/userReceivers').then(function(response) {
 		$scope.receivers = response.data;
-	});
-
-	// get alerts for logged in user
-	$http.get('/api/userAlerts').then(function(response) {
-		$scope.alerts = response.data;
 	});
 
 	// set edit and add receiver forms to hidden and define toggle function to show
@@ -131,6 +147,19 @@ app.controller('profileController', ['$scope', '$http', '$location', function($s
 		})
 	};
 
+}]);
+
+//=============================Alerts====================================================================
+app.controller('alertsController', ['$scope', '$http', '$location', function($scope, $http, $location) {
+
+	// get alerts for logged in user
+	$http.get('/api/userAlerts').then(function(response) {
+		$scope.alerts = response.data.map(function(entry) {
+			entry.time = new Date(entry.time);
+			return entry
+		});
+	});
+
 	// set edit and add alerts forms to hidden and define toggle function to show
 	$scope.editAlertForm = false;
 	$scope.addAlertForm = false;
@@ -145,9 +174,12 @@ app.controller('profileController', ['$scope', '$http', '$location', function($s
 	$scope.addAlert = function() {
 		$scope.addAlertForm = false;
 		$scope.alert.userID = $scope.user._id;
-		console.log($scope.alert);
+		$scope.alert.time = $scope.alert.time.getTime();
 		$http.post('/api/addAlert', $scope.alert).then(function(response) {
-			$scope.alerts = response.data;
+			$scope.alerts = response.data.map(function(entry) {
+				entry.time = new Date(entry.time);
+				return entry
+			});
 		});
 	};
 	$scope.removeAlert = function(index) {
@@ -162,78 +194,15 @@ app.controller('profileController', ['$scope', '$http', '$location', function($s
 			id : $scope.alerts[index]._id,
 			trailHead  : alert.trailHead, 
 			route : alert.route,
-			time : alert.time,
+			time : alert.time.getTime(),
 		};
 		$http.post('/api/editAlert', edit).then(function(response) {
-			$scope.alerts = response.data;
-		})
-	};
-
-	$scope.sendMessage - function() {
-		$http.post('/sms/sendMessage');
-	}
-
-}]);
-
-app.controller('editController', ['$scope', '$http', '$location', function($scope, $http, $location) {
-
-	$http.get('/api/profile').then(function(response) {
-		if (response.data._id) {
-			$scope.editUser = response.data;
-		}
-		else if (!response.data.authorized) {
-			$location.url('/')
-		}
-	});
-
-	$scope.saveProfile = function() {
-		$http.post('/api/editProfile', $scope.editUser).then(function(response) {
-			$location.url('/profile.html');
+			$scope.alerts = response.data.map(function(entry) {
+				entry.time = new Date(entry.time);
+				return entry
+			});
 		});
 	};
 
 }]);
-
-// angular.module('plunker', ['ui.bootstrap', 'ui.bootstrap.datetimepicker'])
-
-// var DateTimePickerDemoCtrl = function ($scope, $timeout) {
-//   $scope.dateTimeNow = function() {
-//     $scope.date = new Date();
-//   };
-//   $scope.dateTimeNow();
-  
-//   $scope.toggleMinDate = function() {
-//     $scope.minDate = $scope.minDate ? null : new Date();
-//   };
-   
-//   $scope.maxDate = new Date('2014-06-22');
-//   $scope.toggleMinDate();
-
-//   $scope.dateOptions = {
-//     startingDay: 1,
-//     showWeeks: false
-//   };
-  
-//   $scope.$watch('date', function () {
-//      alert('changed');
-//   });
-  
-//   // Disable weekend selection
-//   $scope.disabled = function(calendarDate, mode) {
-//     return mode === 'day' && ( calendarDate.getDay() === 0 || calendarDate.getDay() === 6 );
-//   };
-  
-//   $scope.hourStep = 1;
-//   $scope.minuteStep = 15;
-
-//   $scope.timeOptions = {
-//     hourStep: [1, 2, 3],
-//     minuteStep: [1, 5, 10, 15, 25, 30]
-//   };
-
-//   $scope.showMeridian = true;
-//   $scope.timeToggleMode = function() {
-//     $scope.showMeridian = !$scope.showMeridian;
-//   };
-// };
 

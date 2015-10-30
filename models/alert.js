@@ -14,7 +14,7 @@ var alertSchema = mongoose.Schema( {
 		required : true,
 	},
 	time : {
-		type     : String,
+		type     : Number,
 		required : true,
 	},
 	receivers : [{
