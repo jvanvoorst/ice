@@ -31,7 +31,8 @@
 	    	<label>Choose who to alert</label>
 	    	<div ng-repeat="receiver in receivers">
 	    		<label>{{receiver.name}}</label>
-				<input type="checkbox">
+	    		<h4>{{receiver._id}}</h4>
+				<input ng-model="value.{{receiver._id}}" type="checkbox">
 		    </div>
 		</div>
 	    <button type="submit" class="btn btn-default">Submit</button>

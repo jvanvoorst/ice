@@ -105,7 +105,12 @@ app.controller('receiversController', ['$scope', '$http', '$location', function(
 
 	// get receivers for logged in user
 	$http.get('/api/userReceivers').then(function(response) {
-		$scope.receivers = response.data;
+		if (response.data.authorized === false) {
+			$location.url('/')
+		}
+		else {
+			$scope.receivers = response.data;
+		}
 	});
 
 	// set edit and add receiver forms to hidden and define toggle function to show
@@ -154,10 +159,20 @@ app.controller('alertsController', ['$scope', '$http', '$location', function($sc
 
 	// get alerts for logged in user
 	$http.get('/api/userAlerts').then(function(response) {
-		$scope.alerts = response.data.map(function(entry) {
-			entry.time = new Date(entry.time);
-			return entry
-		});
+		if (response.data.authorized === false) {
+			$location.url('/');
+		}
+		else {
+			$scope.alerts = response.data.map(function(entry) {
+				entry.time = new Date(entry.time);
+				return entry;
+			});
+		}
+	});
+
+	// get receivers for logged in user
+	$http.get('/api/userReceivers').then(function(response) {
+		$scope.receivers = response.data;
 	});
 
 	// set edit and add alerts forms to hidden and define toggle function to show
@@ -170,9 +185,14 @@ app.controller('alertsController', ['$scope', '$http', '$location', function($sc
 		$scope.editAlertForm = !$scope.editAlertForm;
 	};
 
+	// $scope.addReceiverToAlert = function(id) {
+	// 	console.log(id);
+	// }
+
 	//add, remove and edit functions for Alerts
 	$scope.addAlert = function() {
 		$scope.addAlertForm = false;
+		console.log($scope.receiver._id);
 		$scope.alert.userID = $scope.user._id;
 		$scope.alert.time = $scope.alert.time.getTime();
 		$http.post('/api/addAlert', $scope.alert).then(function(response) {
