@@ -38,24 +38,25 @@
 		<h5>{{receiver.email}}</h5>
 		<h5>{{receiver.phone}}</h5>
 		<button ng-click="removeReceiver($index)" class="btn btn-xs">Remove</button>
-		<button ng-click="toggleEditReceiverForm()" class="btn btn-xs">edit</button>
-		<div ng-show="editReceiverForm">
-			<form ng-submit="editReceiver(receiver, $index)">
-			    <div class="form-group">
-			        <label>Name</label>
-			        <input ng-model="receiver.name" class="form-control" placeholder="name" required>
-			    </div>
-			    <div class="form-group">
-			        <label>Email address</label>
-			        <input ng-model="receiver.email" type="email" class="form-control" placeholder="name@email.com" required>
-			    </div>
-			    <div class="form-group">
-			        <label>Phone Number (this number will be used by the system to send alerts to)</label>
-			        <input ng-model="receiver.phone" type="tel" pattern="^\d{3}-\d{3}-\d{4}$" class="form-control" placeholder="xxx-xxx-xxxx" required>
-			    </div>
-			    <button type="submit" class="btn btn-default">Submit</button>
-			    <button ng-click="toggleEditReceiverForm()" class="btn btn-default btn-danger">Cancel</button>
-			</form>
-		</div>
+		<button ng-click="editReceiver(receiver)" class="btn btn-xs">edit</button>
+	</div>
+
+	<div ng-show="editReceiverForm">
+		<form ng-submit="saveEditReceiver()">
+		    <div class="form-group">
+		        <label>Name</label>
+		        <input ng-model="receiverEdit.name" class="form-control" placeholder="name" required>
+		    </div>
+		    <div class="form-group">
+		        <label>Email address</label>
+		        <input ng-model="receiverEdit.email" type="email" class="form-control" placeholder="name@email.com" required>
+		    </div>
+		    <div class="form-group">
+		        <label>Phone Number (this number will be used by the system to send alerts to)</label>
+		        <input ng-model="receiverEdit.phone" type="tel" pattern="^\d{3}-\d{3}-\d{4}$" class="form-control" placeholder="xxx-xxx-xxxx" required>
+		    </div>
+		    <button type="submit" class="btn btn-default">Submit</button>
+		    <button ng-click="toggleEditReceiverForm()" class="btn btn-default btn-danger">Cancel</button>
+		</form>
 	</div>
 </div>

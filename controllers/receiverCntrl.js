@@ -26,13 +26,16 @@ var receiverController = {
     },
 
     editReceiver : function(req, res) {
-        Receiver.findByIdAndUpdate(req.body.id, {
+        console.log(req.body);
+        Receiver.findByIdAndUpdate(req.body._id, {
             $set : {
-                name : req.body.name,
-                email : req.body.email,
-                phone : req.body.phone,
+                name   : req.body.name,
+                email  : req.body.email,
+                phone  : req.body.phone,
+                userID : req.body.userID,
             }
         }, function(err, results) {
+            console.log(err);
             Receiver.find({ userID : req.user._id}, function(err, results) {
                 res.send(results);
             });

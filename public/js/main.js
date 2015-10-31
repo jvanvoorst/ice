@@ -94,6 +94,7 @@ app.controller('profileController', ['$scope', '$http', '$location', function($s
 
 	$scope.saveProfile = function() {
 		$http.post('/api/editProfile', $scope.editUser).then(function(response) {
+			$scope.user = response.data
 			$location.url('/profile.html');
 		});
 	};
@@ -139,18 +140,18 @@ app.controller('receiversController', ['$scope', '$http', '$location', function(
 			$scope.receivers = response.data;
 		});
 	};
-	$scope.editReceiver = function(receiver, index) {
+
+	$scope.editReceiver = function(receiver) {
+		$scope.editReceiverForm = true;
+		$scope.receiverEdit = receiver;
+	};
+
+	$scope.saveEditReceiver = function() {
 		$scope.editReceiverForm = false;
-		var edit = {
-			id : $scope.receivers[index]._id,
-			name  : receiver.name, 
-			email : receiver.email,
-			phone : receiver.phone,
-		};
-		$http.post('/api/editReceiver', edit).then(function(response) {
+		$http.post('/api/editReceiver', $scope.receiverEdit).then(function(response) {
 			$scope.receivers = response.data;
 		})
-	};
+	}
 
 }]);
 
@@ -175,6 +176,10 @@ app.controller('alertsController', ['$scope', '$http', '$location', function($sc
 		$scope.receivers = response.data;
 	});
 
+	$http.get('/api/profile').then(function(response) {
+		$scope.user = response.data;
+	});
+
 	// set edit and add alerts forms to hidden and define toggle function to show
 	$scope.editAlertForm = false;
 	$scope.addAlertForm = false;
@@ -185,14 +190,12 @@ app.controller('alertsController', ['$scope', '$http', '$location', function($sc
 		$scope.editAlertForm = !$scope.editAlertForm;
 	};
 
-	// $scope.addReceiverToAlert = function(id) {
-	// 	console.log(id);
-	// }
+ 	$scope.alertReceivers = [];
 
 	//add, remove and edit functions for Alerts
 	$scope.addAlert = function() {
 		$scope.addAlertForm = false;
-		console.log($scope.receiver._id);
+		$scope.alert.receivers = $scope.alertReceivers;
 		$scope.alert.userID = $scope.user._id;
 		$scope.alert.time = $scope.alert.time.getTime();
 		$http.post('/api/addAlert', $scope.alert).then(function(response) {
@@ -202,27 +205,58 @@ app.controller('alertsController', ['$scope', '$http', '$location', function($sc
 			});
 		});
 	};
+
 	$scope.removeAlert = function(index) {
 		var remove = { id : $scope.alerts[index]._id };
 		$http.post('/api/removeAlert', remove).then(function(response) {
 			$scope.alerts = response.data;
 		});
 	};
-	$scope.editAlert = function(alert, index) {
+	$scope.editAlert = function(alert) {
+		$scope.editAlertForm = !$scope.editAlertForm;
+		$scope.alertEdit = alert;
+	};
+
+	$scope.saveEditAlert = function() {
 		$scope.editAlertForm = false;
-		var edit = {
-			id : $scope.alerts[index]._id,
-			trailHead  : alert.trailHead, 
-			route : alert.route,
-			time : alert.time.getTime(),
-		};
-		$http.post('/api/editAlert', edit).then(function(response) {
+		$scope.alertEdit.time = $scope.alertEdit.time.getTime();
+		$http.post('/api/editAlert', $scope.alertEdit).then(function(response) {
 			$scope.alerts = response.data.map(function(entry) {
 				entry.time = new Date(entry.time);
-				return entry
+				return entry;	
 			});
 		});
 	};
 
 }]);
 
+app.directive('checkList', function() {
+	return {
+	scope: {
+  		list: '=checkList',
+  		value: '@'
+	},
+	link: function(scope, elem, attrs) {
+  		var handler = function(setup) {
+    		var checked = elem.prop('checked');
+    		var index = scope.list.indexOf(scope.value);
+
+    		if (checked && index == -1) {
+      			if (setup) elem.prop('checked', false);
+     	 		else scope.list.push(scope.value);
+    		} else if (!checked && index != -1) {
+      			if (setup) elem.prop('checked', true);
+     	 		else scope.list.splice(index, 1);
+        	}
+     	};
+      
+      	var setupHandler = handler.bind(null, true);
+      	var changeHandler = handler.bind(null, false);
+            
+      	elem.on('change', function() {
+        	scope.$apply(changeHandler);
+      	});
+	    	scope.$watch('list', setupHandler, true);
+		}
+	};
+});

@@ -27,7 +27,8 @@ var alertController = {
     },
 
     editAlert : function(req, res) {
-        Alert.findByIdAndUpdate(req.body.id, {
+        console.log(req.body);
+        Alert.findByIdAndUpdate(req.body._id, {
             $set : {
                 trailHead : req.body.trailHead,
                 route     : req.body.route,
@@ -35,6 +36,7 @@ var alertController = {
                 receivers : req.body.receivers,
             }
         }, function(err, results) {
+            console.log(err);
             Alert.find({ userID : req.user._id}, function(err, results) {
                 res.send(results);
             });
