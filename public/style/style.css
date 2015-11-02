@@ -2,6 +2,65 @@
 	background-color: lightgrey;
 }
 .header {
-	background-color: lightgrey;
-	height: 200px;
+	background-image: url('../images/ice-header.jpg');
+	background-size: 100% 100%;
+	height: 370px;
+	position: relative;
+}
+.header-text {
+	font-family: lato;
+	font-size: 22em;
+	font-weight: 700;
+	position: relative;
+	top: -100px;
+	color: #34495e;
+}
+.header-text-secondary {
+	font-size: 4em;
+	position: absolute;
+	left: 100px;
+	color: #2980b9;
+}
+.footer {
+	background-image: url('../images/ice-footer.jpg');
+	background-size: 100% 100%;
+	height: 100px;
+	margin-top: 40px;
+}
+.footer-lrg {
+	font-family: Lato;
+	font-size: 6em;
+	font-weight: 700;
+	color: #34495e;
+}
+.footer-sm {
+	font-size: 2em;
+	color: #2980b9;
+}
+.btn-red {
+	background-color: #FF0000;
+	color: lightgrey;
+}
+.btn-blue {
+	background-color: #34495e;
+	color: white;
+}
+.btn-ltblue {
+	background-color: #2980b9;
+	color: lightgrey;
+}
+.btn-log {
+	position: relative;
+	top: 320px;
+	right: 4px;
+}
+.btn-edit {
+	padding-left: 0;
+}
+.welcome-body {
+	font-size: 2em;
+	padding-top: 30px;
+}
+.default-text {
+	font-size: 1.5em;
 }

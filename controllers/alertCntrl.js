@@ -30,10 +30,12 @@ var alertController = {
         console.log(req.body);
         Alert.findByIdAndUpdate(req.body._id, {
             $set : {
-                trailHead : req.body.trailHead,
-                route     : req.body.route,
-                time      : req.body.time,
-                receivers : req.body.receivers,
+                trailHead  : req.body.trailHead,
+                route      : req.body.route,
+                vehicle    : req.body.vehicle,
+                vehicleLic : req.body.vehicleLic,
+                time       : req.body.time,
+                receivers  : req.body.receivers,
             }
         }, function(err, results) {
             console.log(err);

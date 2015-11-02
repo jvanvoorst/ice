@@ -1,24 +1,23 @@
 <div class="container">
 	<div class="row">
-		<div class="col-md-4 col-md-offset-7">
-			<button class="btn btn-default btn-primary">Profile</button>
-			<a href="#/receivers.html"><button class="btn btn-default">People</button></a>
-			<a href="#/alerts.html"><button class="btn btn-default">Alerts</button></a>
-			<button ng-click="logout()" class="btn btn-default">Log Out</button>
+		<div class="col-md-4">
+			<button class="btn btn-default btn-blue">Profile</button>
+			<a href="#/receivers.html"><button class="btn btn-default btn-ltblue">People</button></a>
+			<a href="#/alerts.html"><button class="btn btn-default btn-ltblue">Alerts</button></a>
 		</div>
 	</div>
 </div>
 
 <div class="container">
 	<h3>Profile</h3>
-	<h4>{{user.first}}</h4>
-	<h4>{{user.last}}</h4>
+	<span class="default-text">{{user.first}}</span>
+	<span class="default-text">{{user.last}}</span>
 	<h4>{{user.phone}}</h4>
 	<h4>{{user.username}}</h4>
 </div>
 
-<div class="container">
-	<a class="btn" href="#/editprofile.html">Edit Profile</a>
+<div class="container btn-edit">
+	<a class="btn" href="#/editprofile.html"><button class='btn btn-default btn-ltblue'>Edit Profile</button></a>
 </div>
 
 

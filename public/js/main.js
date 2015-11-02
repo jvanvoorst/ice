@@ -34,8 +34,9 @@ app.config(['$routeProvider', function($routeProvider) {
 }]);
 
 //=============================Login - Register========================================================
-app.controller('mainController', ['$scope', '$http', '$location', function($scope, $http, $location) {
+app.controller('mainController', ['$scope', '$http', '$location', '$rootScope', function($scope, $http, $location, $rootScope) {
 
+	$rootScope.usr = false;
 	$scope.createUser = function() {
 		if ($scope.newUser.password !== $scope.newUser.passwordCheck) {
 			alert('Passwords do not match, please try again');
@@ -71,8 +72,9 @@ app.controller('mainController', ['$scope', '$http', '$location', function($scop
 }]);
 
 //=============================Profile====================================================================
-app.controller('profileController', ['$scope', '$http', '$location', function($scope, $http, $location) {
+app.controller('profileController', ['$scope', '$http', '$location', '$rootScope', function($scope, $http, $location, $rootScope) {
 	
+	$rootScope.usr = true;
 	// get user profile info
 	$http.get('/api/profile').then(function(response) {
 		if (response.data._id) {
@@ -102,8 +104,9 @@ app.controller('profileController', ['$scope', '$http', '$location', function($s
 }]);
 
 //=============================Receivers====================================================================
-app.controller('receiversController', ['$scope', '$http', '$location', function($scope, $http, $location) {
+app.controller('receiversController', ['$scope', '$http', '$location', '$rootScope', function($scope, $http, $location, $rootScope) {
 
+	$rootScope.usr = true;
 	// get receivers for logged in user
 	$http.get('/api/userReceivers').then(function(response) {
 		if (response.data.authorized === false) {
@@ -114,6 +117,10 @@ app.controller('receiversController', ['$scope', '$http', '$location', function(
 		}
 	});
 
+	$http.get('/api/profile').then(function(response) {
+		$scope.user = response.data;
+	});
+
 	// set edit and add receiver forms to hidden and define toggle function to show
 	$scope.editReceiverForm = false;
 	$scope.addReceiverForm = false;
@@ -122,6 +129,9 @@ app.controller('receiversController', ['$scope', '$http', '$location', function(
 	};
 	$scope.toggleEditReceiverForm = function() {
 		$scope.editReceiverForm = !$scope.editReceiverForm;
+		$http.get('/api/userReceivers').then(function(response) {
+			$scope.receivers = response.data;
+		});	
 	};
 
 	// add, remove and edit functions for Receivers
@@ -132,6 +142,7 @@ app.controller('receiversController', ['$scope', '$http', '$location', function(
 
 		$http.post('/api/addReceiver', $scope.receiver).then(function(response) {
 			$scope.receivers = response.data;
+			$scope.receiver = {};
 		});
 	};
 	$scope.removeReceiver = function(index) {
@@ -156,8 +167,9 @@ app.controller('receiversController', ['$scope', '$http', '$location', function(
 }]);
 
 //=============================Alerts====================================================================
-app.controller('alertsController', ['$scope', '$http', '$location', function($scope, $http, $location) {
+app.controller('alertsController', ['$scope', '$http', '$location', '$rootScope', function($scope, $http, $location, $rootScope) {
 
+	$rootScope.usr = true;
 	// get alerts for logged in user
 	$http.get('/api/userAlerts').then(function(response) {
 		if (response.data.authorized === false) {
@@ -188,12 +200,19 @@ app.controller('alertsController', ['$scope', '$http', '$location', function($sc
 	};
 	$scope.toggleEditAlertForm = function() {
 		$scope.editAlertForm = !$scope.editAlertForm;
+		$http.get('/api/userAlerts').then(function(response) {
+			$scope.alerts = response.data.map(function(entry) {
+				entry.time = new Date(entry.time);
+				return entry;
+			});
+		});
 	};
 
  	$scope.alertReceivers = [];
 
 	//add, remove and edit functions for Alerts
 	$scope.addAlert = function() {
+		console.log('add alert')
 		$scope.addAlertForm = false;
 		$scope.alert.receivers = $scope.alertReceivers;
 		$scope.alert.userID = $scope.user._id;
@@ -218,6 +237,7 @@ app.controller('alertsController', ['$scope', '$http', '$location', function($sc
 	};
 
 	$scope.saveEditAlert = function() {
+		console.log('save edit alert')
 		$scope.editAlertForm = false;
 		$scope.alertEdit.time = $scope.alertEdit.time.getTime();
 		$http.post('/api/editAlert', $scope.alertEdit).then(function(response) {

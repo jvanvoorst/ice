@@ -13,6 +13,12 @@ var alertSchema = mongoose.Schema( {
 		type     : String,
 		required : true,
 	},
+	vehicle : {
+		type : String,
+	},
+	vehicleLic : {
+		type : String,
+	},
 	time : {
 		type     : Number,
 		required : true,
