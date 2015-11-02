@@ -27,6 +27,9 @@ var alertSchema = mongoose.Schema( {
         type : mongoose.Schema.ObjectId,
         ref  : 'receiver'
     }],
+    active : {
+    	type : Boolean,
+    },
 });
 
 module.exports = mongoose.model('alert', alertSchema)

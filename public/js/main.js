@@ -85,19 +85,25 @@ app.controller('profileController', ['$scope', '$http', '$location', '$rootScope
 		}
 	});
 
-	$http.get('/api/profile').then(function(response) {
-		if (response.data._id) {
-			$scope.editUser = response.data;
-		}
-		else if (!response.data.authorized) {
-			$location.url('/')
-		}
-	});
+	$scope.toggleEditProfileForm = function() {
+		$scope.editProfileForm = !$scope.editProfileForm;
+		$http.get('/api/profile').then(function(response) {
+			$scope.user = response.data;
+		});
+	};
+
+	$scope.editProfile = function() {
+		$scope.editProfileForm = !$scope.editProfileForm;
+		// $scope.profileEdit = $scope.user;
+		// $http.get('/api/profile').then(function(response) {
+		// 	$scope.user = response.data;
+		// });
+	};
 
 	$scope.saveProfile = function() {
-		$http.post('/api/editProfile', $scope.editUser).then(function(response) {
-			$scope.user = response.data
-			$location.url('/profile.html');
+		$http.post('/api/editProfile', $scope.user).then(function(response) {
+			$scope.toggleEditProfileForm();
+			$scope.user = response.data;
 		});
 	};
 
@@ -126,6 +132,7 @@ app.controller('receiversController', ['$scope', '$http', '$location', '$rootSco
 	$scope.addReceiverForm = false;
 	$scope.toggleAddReceiverForm = function() {
 		$scope.addReceiverForm = !$scope.addReceiverForm;
+		$scope.receiver = {};
 	};
 	$scope.toggleEditReceiverForm = function() {
 		$scope.editReceiverForm = !$scope.editReceiverForm;
@@ -197,6 +204,7 @@ app.controller('alertsController', ['$scope', '$http', '$location', '$rootScope'
 	$scope.addAlertForm = false;
 	$scope.toggleAddAlertForm = function() {
 		$scope.addAlertForm = !$scope.addAlertForm;
+		$scope.alert = {};
 	};
 	$scope.toggleEditAlertForm = function() {
 		$scope.editAlertForm = !$scope.editAlertForm;
@@ -232,12 +240,11 @@ app.controller('alertsController', ['$scope', '$http', '$location', '$rootScope'
 		});
 	};
 	$scope.editAlert = function(alert) {
-		$scope.editAlertForm = !$scope.editAlertForm;
+		$scope.editAlertForm = true;
 		$scope.alertEdit = alert;
 	};
 
 	$scope.saveEditAlert = function() {
-		console.log('save edit alert')
 		$scope.editAlertForm = false;
 		$scope.alertEdit.time = $scope.alertEdit.time.getTime();
 		$http.post('/api/editAlert', $scope.alertEdit).then(function(response) {

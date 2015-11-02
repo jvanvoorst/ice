@@ -16,13 +16,15 @@
 	<div class="row">
 		
 		<!-- Display Receiver -->
-		<div class="col-md-6">
-			<div ng-repeat="receiver in receivers"class="receivers">
+		<div class="col-md-6 view-height">
+			<div ng-repeat="receiver in receivers"class="data-container container">
 				<h5>{{receiver.name}}</h5>
 				<h5>{{receiver.email}}</h5>
 				<h5>{{receiver.phone}}</h5>
-				<button ng-click="removeReceiver($index)" class="btn btn-xs">Remove</button>
-				<button ng-click="editReceiver(receiver)" class="btn btn-xs">edit</button>
+				<div class="pull-right">
+					<button ng-click="removeReceiver($index)" class="btn btn-sm">Remove</button>
+					<button ng-click="editReceiver(receiver)" class="btn btn-sm">edit</button>
+				</div>
 			</div>
 		</div>
 
@@ -48,8 +50,8 @@
 			</div>
 		</div>	
 	
+		<!-- Edit Receiver -->
 		<div class="col-md-6">
-			<!-- Edit Receiver -->
 			<div ng-show="editReceiverForm">
 				<form ng-submit="saveEditReceiver()">
 				    <div class="form-group">

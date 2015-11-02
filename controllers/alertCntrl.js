@@ -36,6 +36,7 @@ var alertController = {
                 vehicleLic : req.body.vehicleLic,
                 time       : req.body.time,
                 receivers  : req.body.receivers,
+                active     : req.body.active
             }
         }, function(err, results) {
             console.log(err);

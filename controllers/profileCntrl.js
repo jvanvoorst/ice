@@ -12,8 +12,8 @@ var profileController = {
             user.username = req.body.username;
             user.phone = req.body.phone;
             user.save();
+            res.send(req.user);
         });
-        res.send(req.user);
     },
 };
 

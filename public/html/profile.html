@@ -10,14 +10,43 @@
 
 <div class="container">
 	<h3>Profile</h3>
-	<span class="default-text">{{user.first}}</span>
-	<span class="default-text">{{user.last}}</span>
-	<h4>{{user.phone}}</h4>
-	<h4>{{user.username}}</h4>
-</div>
+	<button ng-click="editProfile()">Edit Profile</button>
+	
+	<div class="row">
 
-<div class="container btn-edit">
-	<a class="btn" href="#/editprofile.html"><button class='btn btn-default btn-ltblue'>Edit Profile</button></a>
+		<div class="col-md-6 view-height profile">
+			<div class="profile-text">
+				<span class="default-text">{{user.first}}</span>
+				<span class="default-text">{{user.last}}</span>
+				<h4>{{user.username}}</h4>
+				<h4>{{user.phone}}</h4>
+			</div>
+		</div>
+
+		<div class="col-md-6" ng-show="editProfileForm"> 
+		    <form ng-submit="saveProfile()">
+		        <div class="form-group">
+		            <label>Name</label>
+		            <input ng-model="user.first" class="form-control" placeholder="first" required>
+		        </div>
+		        <div class="form-group">
+		            <input ng-model="user.last" class="form-control" placeholder="last">
+		        </div>
+		        <div class="form-group">
+		            <label>Email address</label>
+		            <input ng-model="user.username" type="email" class="form-control" placeholder="name@email.com" required>
+		        </div>
+		        <div class="form-group">
+		            <label>Phone Number (this number will be used by the system to send alerts to)</label>
+		            <input ng-model="user.phone" type="tel" pattern="^\d{3}-\d{3}-\d{4}$" class="form-control" placeholder="xxx-xxx-xxxx" required>
+		        </div>
+		        <button type="submit" class="btn btn-default btn-ltblue">Save</button>
+		        <button ng-click="toggleEditProfileForm()" class="btn btn-default btn-red" type="button">Cancel</button>
+		    </form>
+		</div>
+
+	</div>
+
 </div>
 
 

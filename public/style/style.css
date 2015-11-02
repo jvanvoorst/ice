@@ -1,5 +1,9 @@
-.receivers {
+.data-container {
 	background-color: lightgrey;
+	padding: 1px 0 0 15px;
+	margin-top: 10px;
+	border-radius: 4px;
+	width : 100%;
 }
 .header {
 	background-image: url('../images/ice-header.jpg');
@@ -63,4 +67,17 @@
 }
 .default-text {
 	font-size: 1.5em;
+}
+.view-height {
+	min-height: 560px;
+}
+.profile {
+	text-align: center;
+	padding-top: 90px;
+}
+.profile-text {
+	vertical-align: middle;
+}
+.alert-active {
+	background-color: #FF0000;
 }
