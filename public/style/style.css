@@ -17,7 +17,7 @@
 	font-weight: 700;
 	position: relative;
 	top: -100px;
-	color: #34495e;
+	color: #3B444A;
 }
 .header-text-secondary {
 	font-size: 4em;
@@ -79,5 +79,5 @@
 	vertical-align: middle;
 }
 .alert-active {
-	background-color: #FF0000;
+	background-color: #F54A2E;
 }
