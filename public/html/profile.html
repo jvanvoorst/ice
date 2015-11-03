@@ -14,6 +14,7 @@
 	
 	<div class="row">
 
+		<!-- Show Profile -->
 		<div class="col-md-6 view-height profile">
 			<div class="profile-text">
 				<span class="default-text">{{user.first}}</span>
@@ -23,6 +24,7 @@
 			</div>
 		</div>
 
+		<!-- Edit Profile -->
 		<div class="col-md-6" ng-show="editProfileForm"> 
 		    <form ng-submit="saveProfile()">
 		        <div class="form-group">
@@ -44,9 +46,7 @@
 		        <button ng-click="toggleEditProfileForm()" class="btn btn-default btn-red" type="button">Cancel</button>
 		    </form>
 		</div>
-
 	</div>
-
 </div>
 
 

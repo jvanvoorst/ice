@@ -18,10 +18,6 @@ app.config(['$routeProvider', function($routeProvider) {
 		templateUrl : '/html/profile.html',
 		controller 	: 'profileController',
 	})
-	.when('/editprofile.html', {
-		templateUrl : '/html/editprofile.html',
-		controller  : 'profileController'
-	})
 	.when('/receivers.html', {
 		templateUrl : '/html/receivers.html',
 		controller : 'receiversController'
@@ -94,10 +90,6 @@ app.controller('profileController', ['$scope', '$http', '$location', '$rootScope
 
 	$scope.editProfile = function() {
 		$scope.editProfileForm = !$scope.editProfileForm;
-		// $scope.profileEdit = $scope.user;
-		// $http.get('/api/profile').then(function(response) {
-		// 	$scope.user = response.data;
-		// });
 	};
 
 	$scope.saveProfile = function() {
