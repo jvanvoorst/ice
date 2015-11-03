@@ -8,7 +8,6 @@ var alertController = {
     }, 
 
     addAlert : function(req, res) {
-        console.log(req.body);
         var alert = new Alert(req.body);
         alert.save();
         Alert.find({ userID : req.user._id}, function(err, results) {
@@ -27,7 +26,6 @@ var alertController = {
     },
 
     editAlert : function(req, res) {
-        console.log(req.body);
         Alert.findByIdAndUpdate(req.body._id, {
             $set : {
                 trailHead  : req.body.trailHead,
@@ -36,7 +34,7 @@ var alertController = {
                 vehicleLic : req.body.vehicleLic,
                 time       : req.body.time,
                 receivers  : req.body.receivers,
-                active     : req.body.active
+                active     : req.body.active,
             }
         }, function(err, results) {
             console.log(err);
@@ -44,6 +42,16 @@ var alertController = {
                 res.send(results);
             });
         });
+    },
+    cancelAlert : function(req, res) {
+        console.log(req.body);
+        // Alert.findByIdAndUpdate(req.body.?, {
+        //     set : {
+        //         active : false,
+        //     }
+        // }, function(err, results) {
+
+        // });
     },
 };
 

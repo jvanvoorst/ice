@@ -62,10 +62,11 @@ app.post('/api/addAlert', alertCntrl.addAlert);
 app.post('/api/editAlert', alertCntrl.editAlert);
 app.post('/api/removeAlert', alertCntrl.removeAlert);
 
-app.post('/sms/sendMessage', twilio.send);
+// Cancel alert when user replys with 'safe' in message body
+app.post('/sms/cancelAlert', alertCntrl.cancelAlert);
 
 // Creating Server and Listening for Connections \\
-var port = 3000
+var port = 8082
 app.listen(port, function(){
   console.log('Server running on port ' + port);
 
