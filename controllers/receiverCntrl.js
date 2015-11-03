@@ -2,6 +2,7 @@ var Receiver = require('../models/receiver');
 
 var receiverController = {
 	userReceivers : function(req, res) {
+
 	        Receiver.find({ userID : req.user._id }, function(err, results) {
 	            res.send(results);
 	        });

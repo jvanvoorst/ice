@@ -25,11 +25,12 @@
 						<h4>Return Time: {{alert.time | date : 'medium'}}</h4>
 					</div>
 					<div class="pull-right">
-						<button ng-click="removeAlert($index)" class="btn btn-sm">Remove</button>	
-						<button ng-click="editAlert(alert)" class="btn btn-sm">edit</button>
+						<button ng-click="removeAlert($index)" class="btn btn-sm btn-red">Remove</button>	
+						<button ng-click="editAlert(alert)" class="btn btn-sm btn-ltblue">edit</button>
 					</div>
 				</div>
 			</div>
+			<h5>Red = active alert</h5>
 		</div>
 
 		<!-- Add Alert -->

@@ -5,7 +5,7 @@ var passport = require('passport');
 
 // Connect to DB
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/ice')
+mongoose.connect('mongodb://localhost/ice');
 
 var passportConfig = require('./config/passport'); // Load in our passport configuration that decides how passport actually runs and authenticates
 

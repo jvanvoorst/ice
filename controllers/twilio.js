@@ -2,12 +2,15 @@ var client = require('twilio')('ACbd12f37e9cb9066bf1dc6af671a38341', 'de841befdd
 
 //Send an SMS text message
 var twilio = {
-    send : function(req, res) {
+    send : function(message, to) {
         console.log('sending')
+        // to = to.replace(/-/g,'');
+        // to = '+1' + to;
+        console.log(to);
         client.sendMessage({
-            to:'+13035164002', // Any number Twilio can deliver to
+            to: to, // Any number Twilio can deliver to
             from: '+17203996705', // A number you bought from Twilio and can use for outbound communication
-            body: req.body.message, // body of the SMS message
+            body: message, // body of the SMS message
         }, function(err, responseData) { //this function is executed when a response is received from Twilio
             if (!err) { // "err" is an error received during the request, if any
                 // "responseData" is a JavaScript object containing data received from Twilio.
