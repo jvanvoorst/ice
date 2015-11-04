@@ -9,37 +9,41 @@
 
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular.min.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular-route.js"></script>
-	<!-- <script type="text/javascript" src-"https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.min.js"></script> -->
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+	<!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script> -->
 
 </head>
 <body ng-controller="mainController">
 
 	<div>
 		<div class="container header">
-			<div class="row">
+			<!-- <div class="row"> -->
 		  		<span class='header-text'>Ice</span>
 		  		<span class="header-text-secondary">Backcountry Alerts</span>
 				<div ng-hide="usr" class="pull-right btn-log">
-					<a class='btn btn-lg btn-default btn-red' href="#/register.html">Register</a>
-					<a class='btn btn-lg btn-default btn-red' href="#/login.html">Login</a>
+					<a class='btn btn-lg btn-red' href="#/register.html">Register</a>
+					<a class='btn btn-lg btn-red' href="#/login.html">Login</a>
 				</div>
 				<div ng-show="usr" class="pull-right btn-log">
-					<button ng-click="logout()" class="btn btn-lg btn-default btn-red">Log Out</button>
+					<button ng-click="logout()" class="btn btn-lg btn-red">Log Out</button>
 				</div>
-			</div>
+			<!-- </div> -->
 		</div>
 
 		<div ng-view></div>
 
 		<div class="container">
 		    <div class="footer row">
-		        <span class="footer-lrg">I</span>
-		        <span class="footer-sm">In</span>
-		        <span class="footer-lrg">C</span>
-		        <span class="footer-sm">Case of</span>
-		        <span class="footer-lrg">E</span>
-		        <span class="footer-sm">Emergency</span>
+		    	<div class="col-md-8">
+			        <span class="footer-lrg">I</span>
+			        <span class="footer-sm">In</span>
+			        <span class="footer-lrg">C</span>
+			        <span class="footer-sm">Case of</span>
+			        <span class="footer-lrg">E</span>
+			        <span class="footer-sm">Emergency</span>
+			    </div>
+			    <div class="col-md-4">
+			    	<p class="pull-right footer-note">&copy; 2015 created by Justin Van Voorst</p>
+			    </div>
 		    </div>
 		</div>
     </div>

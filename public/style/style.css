@@ -1,10 +1,12 @@
 .data-container {
 	background-color: lightgrey;
-	padding: 1px 0 0 15px;
-	margin-top: 10px;
+	margin-bottom: 10px;
 	border-radius: 4px;
 	width : 100%;
+	color: black;
 }
+
+/*==================Header==================*/
 .header {
 	background-image: url('../images/ice-header.jpg');
 	background-size: 100% 100%;
@@ -23,61 +25,109 @@
 	font-size: 4em;
 	position: absolute;
 	left: 100px;
-	color: #2980b9;
+	color: #39B0FF;
 }
+
+/*==================Footer==================*/
 .footer {
 	background-image: url('../images/ice-footer.jpg');
 	background-size: 100% 100%;
 	height: 100px;
-	margin-top: 40px;
+	margin-top: 20px;
 }
 .footer-lrg {
 	font-family: Lato;
 	font-size: 6em;
 	font-weight: 700;
-	color: #34495e;
+	color: #3B444A;
 }
 .footer-sm {
 	font-size: 2em;
-	color: #2980b9;
+	color: #39B0FF;
 }
+.footer-note {
+	margin-top: 80px;
+}
+
+/*==================Buttons==================*/
 .btn-red {
-	background-color: #FF0000;
-	color: lightgrey;
-}
-.btn-blue {
-	background-color: #34495e;
+	background-color: #E34235;
 	color: white;
 }
+.btn-blue {
+	background-color: #3B444A;
+	color: white; 
+}
 .btn-ltblue {
-	background-color: #2980b9;
-	color: lightgrey;
+	background-color: #39B0FF;
+	color: #3B444A;
+}
+.btn-tab {
+	border-radius: 0;
 }
 .btn-log {
 	position: relative;
-	top: 320px;
+	top: 311px;
 	right: 4px;
 }
 .btn-edit {
 	padding-left: 0;
 }
+.btn-add {
+	text-align: center;
+	padding-top: 20px;
+}
+.btn-box-tab {
+	padding: 20px 0 0 0;
+}
+.btn-box {
+	margin-right: -31px;
+}
+.btn-box-receiver {
+	margin-top:	107px;
+	padding-right: 0px;
+
+}
+.btn-editProfile {
+	margin-top: 20px;
+}
+/*==================Welcome page==================*/
 .welcome-body {
 	font-size: 2em;
 	padding-top: 30px;
 }
+
+/*==================Profile page==================*/
 .default-text {
 	font-size: 1.5em;
 }
-.view-height {
-	min-height: 560px;
-}
 .profile {
 	text-align: center;
-	padding-top: 90px;
 }
 .profile-text {
 	vertical-align: middle;
 }
-.alert-active {
-	background-color: #F54A2E;
+
+/*==================Alert page==================*/
+.active-text {
+	color: red;
+}
+
+/*==================Pages shared==================*/
+.view-height {
+	min-height: 560px;
+}
+.sidebar {
+}
+.sidebar-blue {
+	background-color: #3B444A;
+	color: white;
+	font-size: 1.7em;
+	padding: 75px;
+	
+}
+.sidebar-red {
+	padding: 40px;
+	background-color: #E34235;
+	color: white;
 }

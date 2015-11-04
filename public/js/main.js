@@ -197,6 +197,7 @@ app.controller('alertsController', ['$scope', '$http', '$location', '$rootScope'
 	$scope.toggleAddAlertForm = function() {
 		$scope.addAlertForm = !$scope.addAlertForm;
 		$scope.alert = {};
+		$scope.alert.active = true;
 	};
 	$scope.toggleEditAlertForm = function() {
 		$scope.editAlertForm = !$scope.editAlertForm;

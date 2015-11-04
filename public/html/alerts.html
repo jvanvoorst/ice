@@ -1,36 +1,46 @@
 <div class="container">
 	<div class="row">
-		<div class="col-md-4">
-			<a href="#/profile.html"><button class="btn btn-default btn-ltblue">Profile</button></a>
-			<a href="#/receivers.html"><button class="btn btn-default btn-ltblue">People</button></a>
-			<button class="btn btn-default btn-blue">Alerts</button>
+		<div class="btn-box-tab pull-left col-md-12">
+			<a href="#/profile.html"><button class="btn btn-tab btn-ltblue">Profile</button></a>
+			<a href="#/receivers.html"><button class="btn btn-tab btn-ltblue">People</button></a>
+			<button class="btn btn-tab btn-blue">Alerts</button>
 		</div>
 	</div>
 </div>
 
 <!-- Alerts ========================================================================================================================== -->
 <div class="container">
-	<h3>Alerts</h3>
-	<button ng-click="toggleAddAlertForm()">Add Alerts</button>
+	
 
 	<div class="row">
 
-		<!-- Show Alerts -->
-		<div class="col-md-6 view-height">
-			<div ng-repeat="alert in alerts">
-				<div ng-class="{'alert-active' : alert.active}" class="data-container container">
-					<div>
-						<h5>TrailHead: {{alert.trailHead}}</h5>
-						<h5>Route: {{alert.route}}</h5>
-						<h4>Return Time: {{alert.time | date : 'medium'}}</h4>
-					</div>
-					<div class="pull-right">
-						<button ng-click="removeAlert($index)" class="btn btn-sm btn-red">Remove</button>	
-						<button ng-click="editAlert(alert)" class="btn btn-sm btn-ltblue">edit</button>
+		<!-- Display Alerts -->
+		<div class="col-md-6 view-height sidebar-red">
+			<div class="row">
+				<div ng-repeat="alert in alerts" class="data-container col-md-8">
+					<h5>TrailHead: {{alert.trailHead}}</h5>
+					<h5>Route: {{alert.route}}</h5>
+					<h5>Return Time: {{alert.time | date : 'medium'}}</h5>
+					<h4 ng-show="{{alert.active}}" class="active-text">Active</h4>
+					<div class="col-md-4 btn-box pull-right">
+						<div class="pull-right">
+							<button ng-click="editAlert(alert)" class="btn btn-sm btn-ltblue">edit</button>
+							<button ng-click="removeAlert($index)" class="btn btn-sm btn-blue">Remove</button>	
+						</div>
 					</div>
 				</div>
 			</div>
-			<h5>Red = active alert</h5>
+			<div class="row">
+				<div class="btn-add">
+					<button ng-click="toggleAddAlertForm()" class="btn btn-md btn-blue">Add Alerts</button>
+				</div>
+			</div>
+		</div>
+
+		<!-- Alert text shown when edit form is not active -->
+		<div ng-hide="editAlertForm || addAlertForm" class="sidebar-blue view-height col-md-6">
+			<p>Alerts</p>
+			<p>This is where the important stuff happens. Add alerts with your trail-head, route description, vehicle description, return time, and the people you want to alert. If you have not already you will need to enter the people to alert on the people tab. You can also cancel an alert here by clicking the edit button for the alert and then unchecking the edit checkbox towards the bottom</p>
 		</div>
 
 		<!-- Add Alert -->
@@ -125,7 +135,7 @@
 				    	<input value="true" type="checkbox" ng-model="alertEdit.active">
 				    </div>
 
-				    <button type="submit" class="btn btn-default btn-ltblue">Submit</button>
+				    <button type="submit" class="btn btn-default btn-ltblue">Save</button>
 					<button ng-click="toggleEditAlertForm()" class="btn btn-default btn-red" type="button">Cancel</button>
 				</form>
 			</div>

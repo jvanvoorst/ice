@@ -1,31 +1,44 @@
 <div class="container">
 	<div class="row">
-		<div class="col-md-4">
-			<a href="#/profile.html"><button class="btn btn-default btn-ltblue">Profile</button></a>
-			<button class="btn btn-default btn-blue">People</button>
-			<a href="#/alerts.html"><button class="btn btn-default btn-ltblue">Alerts</button></a>
+		<div class="btn-box-tab pull-left col-md-12">
+			<a href="#/profile.html"><button class="btn btn-tab btn-ltblue">Profile</button></a>
+			<button class="btn btn-tab btn-blue">People</button>
+			<a href="#/alerts.html"><button class="btn btn-tab btn-ltblue">Alerts</button></a>
 		</div>
 	</div>
 </div>
 
 <!-- Receivers ========================================================================================================================== -->
 <div class="container">
-	<h3>People to Alert</h3>
-	<button ng-click="toggleAddReceiverForm()">Add People</button>
 	
 	<div class="row">
 		
 		<!-- Display Receiver -->
-		<div class="col-md-6 view-height">
-			<div ng-repeat="receiver in receivers"class="data-container container">
-				<h5>{{receiver.name}}</h5>
-				<h5>{{receiver.email}}</h5>
-				<h5>{{receiver.phone}}</h5>
-				<div class="pull-right">
-					<button ng-click="removeReceiver($index)" class="btn btn-sm btn-red">Remove</button>
-					<button ng-click="editReceiver(receiver)" class="btn btn-sm btn-ltblue">edit</button>
+		<div class="col-md-6 view-height sidebar-red">
+			<div class="row">
+				<div ng-repeat="receiver in receivers" class="data-container col-md-8">
+					<h5>{{receiver.name}}</h5>
+					<h5>{{receiver.email}}</h5>
+					<h5>{{receiver.phone}}</h5>
+					<div class="pull-right col-md-4 btn-box">
+						<div class="pull-right">
+							<button ng-click="editReceiver(receiver)" class="btn btn-sm btn-ltblue">edit</button>
+							<button ng-click="removeReceiver($index)" class="btn btn-sm btn-blue">Remove</button>
+						</div>
+					</div>
 				</div>
 			</div>
+			<div class="row">
+				<div class="btn-add">
+					<button ng-click="toggleAddReceiverForm()" class="btn btn-md btn-blue">Add People</button>
+				</div>
+			</div>
+		</div>
+
+		<!-- Receivers text shown when edit form is not active -->
+		<div ng-hide="addReceiverForm || editReceiverForm" class="sidebar-blue view-height col-md-6">
+			<p>People</p>
+			<p>These are your people. They are the ones that you will choose in the alerts tab to receive your alert. Change their email and phone number here. Alerts are currently only sent to phone numbers.</p>
 		</div>
 
 		<!-- Add Receiver Form-->
@@ -49,6 +62,7 @@
 				</form>
 			</div>
 		</div>	
+
 	
 		<!-- Edit Receiver -->
 		<div class="col-md-6">
@@ -66,7 +80,7 @@
 				        <label>Phone Number (this number will be used by the system to send alerts to)</label>
 				        <input ng-model="receiverEdit.phone" type="tel" pattern="^\d{3}-\d{3}-\d{4}$" class="form-control" placeholder="xxx-xxx-xxxx" required>
 				    </div>
-				    <button type="submit" class="btn btn-default btn-ltblue">Submit</button>
+				    <button type="submit" class="btn btn-default btn-ltblue">Save</button>
 					<button ng-click="toggleEditReceiverForm()" class="btn btn-default btn-red" type="button">Cancel</button>
 				</form>
 			</div>
