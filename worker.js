@@ -8,7 +8,8 @@ mongoose.connect('mongodb://localhost/ice');
 var currentTime = (new Date).getTime();
 
 // Send alerts for the alerts that are past due
-function alertsDue() {
+setInterval(function() {
+	console.log('due');
 	Alert
 	.find({ active : true })
 	.populate('receivers')
@@ -25,12 +26,11 @@ function alertsDue() {
 			}
 		});
 	});
-};
-
-alertsDue();
+}, 30000 ); // interval 30 seconds
 
 // Send warning for alerts that are whithin 1 hour of due
-function alertsWarning() {
+setInterval(function() {
+	console.log('warning');
 	people = "";
 	Alert
 	.find({ active : true })
@@ -48,6 +48,4 @@ function alertsWarning() {
 		});
 		
 	});
-}
-
-alertsWarning();
+}, 1800000 ); //interval 30 minutes
