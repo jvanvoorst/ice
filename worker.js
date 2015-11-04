@@ -9,7 +9,6 @@ var currentTime = (new Date).getTime();
 
 // Send alerts for the alerts that are past due
 setInterval(function() {
-	console.log('due');
 	Alert
 	.find({ active : true })
 	.populate('receivers')
@@ -30,7 +29,6 @@ setInterval(function() {
 
 // Send warning for alerts that are whithin 1 hour of due
 setInterval(function() {
-	console.log('warning');
 	people = "";
 	Alert
 	.find({ active : true })
