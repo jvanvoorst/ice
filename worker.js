@@ -19,7 +19,7 @@ setInterval(function() {
 			if (currentTime > alert.time) {
 				alert.receivers.forEach( function(receiver) {
 					message = alert.userID.first + " is over due from trail-head: " + alert.trailHead + " there route was: " + alert.route + " they were due at: " + new Date(alert.time);
-					// twilio.send(message, receiver.phone);
+					twilio.send(message, receiver.phone);
 				});
 				alert.active = false;
 				alert.save();
@@ -43,7 +43,7 @@ setInterval(function() {
 					people += receiver.name + " ";
 				});
 				message = "Your overdue alert for trail-head " + alert.trailHead + " will be sent out to " + people + " at " + new Date(alert.time) + "to cancel reply to this message with: safe"
-				// twilio.send(message, alert.userID.phone);
+				twilio.send(message, alert.userID.phone);
 			}
 		});
 		
