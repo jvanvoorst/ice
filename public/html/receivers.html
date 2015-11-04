@@ -36,9 +36,13 @@
 		</div>
 
 		<!-- Receivers text shown when edit form is not active -->
-		<div ng-hide="addReceiverForm || editReceiverForm" class="sidebar-blue view-height col-md-6">
-			<p>People</p>
-			<p>These are your people. They are the ones that you will choose in the alerts tab to receive your alert. Change their email and phone number here. Alerts are currently only sent to phone numbers.</p>
+		<div class="container" ng-hide="addReceiverForm || editReceiverForm">
+			<div class="row row-blue">
+				<div class="sidebar-blue view-height col-md-6">
+					<p>People</p>
+					<p>These are your people. Add, edit or remove people along with their phone numbers and email addresses here. You will choose individual or multiple people to receive alerts on the alert tab. Currently alerts will only be sent to their phone numbers, not their email addresses.</p>
+				</div>
+			</div>	
 		</div>
 
 		<!-- Add Receiver Form-->

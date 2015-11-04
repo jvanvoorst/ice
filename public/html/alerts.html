@@ -38,9 +38,13 @@
 		</div>
 
 		<!-- Alert text shown when edit form is not active -->
-		<div ng-hide="editAlertForm || addAlertForm" class="sidebar-blue view-height col-md-6">
-			<p>Alerts</p>
-			<p>This is where the important stuff happens. Add alerts with your trail-head, route description, vehicle description, return time, and the people you want to alert. If you have not already you will need to enter the people to alert on the people tab. You can also cancel an alert here by clicking the edit button for the alert and then unchecking the edit checkbox towards the bottom</p>
+		<div class="container" ng-hide="editAlertForm || addAlertForm">
+			<div class="row row-blue">
+				<div class="sidebar-blue view-height col-md-6">
+					<p>Alerts</p>
+					<p>These are your alerts. This is where the important stuff happens. Add, edit or remove alerts along with your trail-head, route description, vehicle description, return time, and the people you want to alert here. If you have not already you will need to add people on the people tab. You can also cancel an alert here by clicking the edit button for the alert and then unchecking the "active" checkbox towards the bottom.</p>
+				</div>
+			</div>
 		</div>
 
 		<!-- Add Alert -->
