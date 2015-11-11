@@ -213,7 +213,7 @@ app.controller('alertsController', ['$scope', '$http', '$location', '$rootScope'
 
 	//add, remove and edit functions for Alerts
 	$scope.addAlert = function() {
-		console.log('add alert')
+		alert('RIGHT NOW THIS APP IS FOR DEMO ONLY. IT WILL NOT SEND ALERTS.')
 		$scope.addAlertForm = false;
 		$scope.alert.receivers = $scope.alertReceivers;
 		$scope.alert.userID = $scope.user._id;
