@@ -9,7 +9,6 @@ var currentTime = (new Date).getTime();
 
 // Send alerts for the alerts that are past due
 setInterval(function() {
-	console.log('due');
 	Alert
 	.find({ active : true })
 	.populate('receivers')
@@ -19,7 +18,7 @@ setInterval(function() {
 			if (currentTime > alert.time) {
 				alert.receivers.forEach( function(receiver) {
 					message = alert.userID.first + " is over due from trail-head: " + alert.trailHead + " there route was: " + alert.route + " they were due at: " + new Date(alert.time);
-					// twilio.send(message, receiver.phone);
+					twilio.send(message, receiver.phone);
 				});
 				alert.active = false;
 				alert.save();
@@ -30,7 +29,6 @@ setInterval(function() {
 
 // Send warning for alerts that are whithin 1 hour of due
 setInterval(function() {
-	console.log('warning');
 	people = "";
 	Alert
 	.find({ active : true })
@@ -43,7 +41,7 @@ setInterval(function() {
 					people += receiver.name + " ";
 				});
 				message = "Your overdue alert for trail-head " + alert.trailHead + " will be sent out to " + people + " at " + new Date(alert.time) + "to cancel reply to this message with: safe"
-				// twilio.send(message, alert.userID.phone);
+				twilio.send(message, alert.userID.phone);
 			}
 		});
 		
